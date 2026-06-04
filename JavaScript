@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function caesar(text, shift) {
+    return text.split('').map(ch => {
+        if (ch >= 'A' && ch <= 'Z') {
+            return String.fromCharCode((ch.charCodeAt(0) - 65 + shift) % 26 + 65);
+        } else if (ch >= 'a' && ch <= 'z') {
+            return String.fromCharCode((ch.charCodeAt(0) - 97 + shift) % 26 + 97);
+        }
+        return ch;
+    }).join('');
+}
+
+async function main() {
+    console.log("=== Caesar Cipher ===");
+    const text = await new Promise(resolve => rl.question("Text: ", resolve));
+    const shift = parseInt(await new Promise(resolve => rl.question("Shift (1-25): ", resolve))) % 26;
+    const encrypted = caesar(text, shift);
+    const decrypted = caesar(encrypted, -shift);
+    console.log(`Encrypted: ${encrypted}`);
+    console.log(`Decrypted: ${decrypted}`);
+    rl.close();
+}
+
+main();
