@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+def caesar(text, shift):
+    result = []
+    for ch in text:
+        if ch.isupper():
+            result.append(chr((ord(ch) - ord('A') + shift) % 26 + ord('A')))
+        elif ch.islower():
+            result.append(chr((ord(ch) - ord('a') + shift) % 26 + ord('a')))
+        else:
+            result.append(ch)
+    return ''.join(result)
+
+def main():
+    print("=== Caesar Cipher ===")
+    text = input("Text: ")
+    shift = int(input("Shift (1-25): ")) % 26
+    encrypted = caesar(text, shift)
+    decrypted = caesar(encrypted, -shift)
+    print(f"Encrypted: {encrypted}")
+    print(f"Decrypted: {decrypted}")
+
+if __name__ == "__main__":
+    main()
