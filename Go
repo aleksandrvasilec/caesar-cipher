@@ -1,0 +1,40 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+func caesar(text string, shift int) string {
+	shift %= 26
+	result := make([]rune, len(text))
+	for i, ch := range text {
+		switch {
+		case ch >= 'A' && ch <= 'Z':
+			result[i] = 'A' + (ch-'A'+rune(shift)+26)%26
+		case ch >= 'a' && ch <= 'z':
+			result[i] = 'a' + (ch-'a'+rune(shift)+26)%26
+		default:
+			result[i] = ch
+		}
+	}
+	return string(result)
+}
+
+func main() {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("=== Caesar Cipher ===")
+	fmt.Print("Text: ")
+	text, _ := reader.ReadString('\n')
+	text = strings.TrimSuffix(text, "\n")
+	fmt.Print("Shift (1-25): ")
+	var shift int
+	fmt.Scan(&shift)
+	shift %= 26
+	encrypted := caesar(text, shift)
+	decrypted := caesar(encrypted, -shift)
+	fmt.Println("Encrypted:", encrypted)
+	fmt.Println("Decrypted:", decrypted)
+}
